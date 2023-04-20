@@ -1,11 +1,12 @@
 import React from 'react';
+import './StaffLists.scss';
 import { MdOutlineRemoveRedEye, MdDeleteOutline } from "react-icons/md";
 import { BiEdit } from 'react-icons/bi';
 
 const StaffLists = () => {
   return (
     <div>
-      <table className="table shadow-lg p-5 mt-4">
+      <table className="table p-5 mt-4">
         <thead className="thead-dark">
           <tr>
             <th className="text-primar text-center" scope="col"></th>
