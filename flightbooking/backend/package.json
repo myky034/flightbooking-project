@@ -2,9 +2,13 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "dependencies": {
+    "@babel/core": "^7.21.4",
+    "@babel/node": "^7.20.7",
+    "@babel/preset-env": "^7.21.4",
     "babel-install": "^2.1.0",
+    "bcrypt": "^5.1.0",
     "express": "^4.18.2",
     "nodemon": "^2.0.22"
   },
@@ -19,9 +23,14 @@
     "sequelize-cli": "^6.6.0"
   },
   "scripts": {
+    "start": "nodemon --exec babel-node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "fullstack",
+    "nodejs",
+    "express"
+  ],
   "author": "Ky Vu",
   "license": "ISC"
 }
