@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import "./AddNew.scss";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
 
 function AddNew({ closeModal }) {
 
   const initialValues = {
+
     idNhanVien: "",
     fullname: "",
     birthday: "",
@@ -18,6 +20,82 @@ function AddNew({ closeModal }) {
     password: "",
     position: "",
     role: "",
+  };
+
+  const [newuser, setNewUser] = useState(initialValues);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleInputChange = event => {
+
+    const { name, value } = event.target;
+    console.log(value)
+    setNewUser({ ...newuser, [name]: value });
+  };
+
+  const saveNewUser = () => {
+    console.log('check new user: ', newUsers)
+    const isValid = checkValidateInput();
+    if (isValid === true) {
+
+      let data = {
+        idNhanVien: newuser.idNhanVien,
+        fullname: newuser.fullname,
+        birthday: newuser.birthday,
+        phoneNumber: newuser.phoneNumber,
+        address: newuser.address,
+        email: newuser.email,
+        gender: newuser.gender,
+        cccd: newuser.cccd,
+        username: newuser.username,
+        password: newuser.password,
+        position: newuser.position,
+        role: newuser.role,
+      };
+
+      //Post user
+      axios.post("https://6448ce78e7eb3378ca364b22.mockapi.io/api/Users", data)
+        .then((response) => {
+          setNewUser({
+            idNhanVien: response.data.idNhanVien,
+            fullname: response.data.fullname,
+            birthday: response.data.birthday,
+            phoneNumber: response.data.phoneNumber,
+            address: response.data.address,
+            email: response.data.email,
+            gender: response.data.gender,
+            cccd: response.data.cccd,
+            username: response.data.username,
+            password: response.data.password,
+            position: response.data.position,
+            role: response.data.role,
+          });
+          setSubmitted(true);
+          console.log(response.data);
+        }
+        )
+        .catch(e => {
+          console.log(e);
+        });
+    }
+  };
+
+  const checkValidateInput = () => {
+    let isValid = true;
+    let arrInput = ['idNhanVien', 'fullname', 'birthday', 'phoneNumber', 'address', 'email', 'gender', 'cccd', 'username', 'password', 'position', 'role'];
+    for (let i = 0; i < arrInput.length; i++) {
+      if (!initialValues.fullname) {
+        console.log('check input fullname: ', initialValues.fullname);
+        isValid = false;
+        alert('Missing params: ' + initialValues.fullname);
+        break;
+      }
+    }
+    return isValid;
+  }
+
+  const newUsers = () => {
+    setNewUser(initialValues);
+    setSubmitted(false);
   };
 
   const onSubmit = (values, props) => {
@@ -65,7 +143,7 @@ function AddNew({ closeModal }) {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-                onClick={() => closeModal(false)}
+                onClick={() => newUsers && closeModal(false)}
               ></button>
             </div>
             <div className="modal-body">
@@ -79,11 +157,12 @@ function AddNew({ closeModal }) {
                     <div className="row">
                       <div className="col-md-12 form-input">
                         <label>Mã Nhân Viên</label>
-                        <Field
+                        <input
                           type="text"
                           name="idNhanVien"
                           placeholder="Enter your id"
                           values={props.values.idNhanVien}
+                          onChange={handleInputChange}
                         />
                         <ErrorMessage
                           className="form-label text-danger"
@@ -94,11 +173,12 @@ function AddNew({ closeModal }) {
 
                       <div className="col-md-12 form-input">
                         <label>Họ Tên</label>
-                        <Field
+                        <input
                           type="text"
                           name="fullname"
                           placeholder="Enter your fullname"
                           values={props.values.fullname}
+                          onChange={handleInputChange}
                         />
                         <ErrorMessage
                           className="form-label text-danger"
@@ -109,11 +189,12 @@ function AddNew({ closeModal }) {
 
                       <div className="col-md-12 form-input">
                         <label>Ngày Sinh</label>
-                        <Field
+                        <input
                           type="text"
                           name="birthday"
                           placeholder="Enter your day of birth"
                           values={props.values.birthday}
+                          onChange={handleInputChange}
                         />
                         <ErrorMessage
                           className="form-label text-danger"
@@ -124,11 +205,12 @@ function AddNew({ closeModal }) {
 
                       <div className="col-md-12 form-input">
                         <label>Số Điện Thoại</label>
-                        <Field
+                        <input
                           type="text"
                           name="phoneNumber"
                           placeholder="Enter your phone number"
                           values={props.values.phoneNumber}
+                          onChange={handleInputChange}
                         />
                         <ErrorMessage
                           className="form-label text-danger"
@@ -139,11 +221,12 @@ function AddNew({ closeModal }) {
 
                       <div className="col-md-12 form-input">
                         <label>Email</label>
-                        <Field
+                        <input
                           type="email"
                           name="email"
                           placeholder="Enter your email"
                           values={props.values.email}
+                          onChange={handleInputChange}
                         />
                         <ErrorMessage
                           className="form-label text-danger"
@@ -154,11 +237,12 @@ function AddNew({ closeModal }) {
 
                       <div className="col-md-12 form-input">
                         <label>Địa Chỉ</label>
-                        <Field
+                        <input
                           as="textarea"
                           name="address"
                           placeholder="Enter your address"
                           values={props.values.address}
+                          onChange={handleInputChange}
                         />
                         <ErrorMessage
                           className="form-label text-danger"
@@ -169,27 +253,14 @@ function AddNew({ closeModal }) {
 
                       <div className="col-md-12 form-input">
                         <label>Giới Tính</label>
-                        <Field component="div" name="myRadioGroup">
-                          <input
-                            type="radio"
-                            id="inlineCheckbox1"
-                            name="gender"
-                            value="male"
-                            defaultChecked={props.values.gender === "Nam"}
-                          />
-                          &nbsp;&nbsp;
-                          <label htmlFor="radioOne">Nam</label>
-                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          <input
-                            type="radio"
-                            id="inlineCheckbox2"
-                            name="gender"
-                            value="female"
-                            defaultChecked={props.values.gender === "Nữ"}
-                          />
-                          &nbsp;&nbsp;
-                          <label htmlFor="radioTwo">Nữ</label>
-                        </Field>
+                        <label>
+                          <Field type="radio" name="gender" value="male" defaultChecked={props.values.gender === "Nam"} onChange={handleInputChange} />
+                          Nam
+                        </label>
+                        <label>
+                          <Field type="radio" name="gender" value="male" defaultChecked={props.values.gender === "Nữ"} onChange={handleInputChange} />
+                          Nữ
+                        </label>
 
                         <ErrorMessage
                           className="form-label text-danger"
@@ -200,11 +271,12 @@ function AddNew({ closeModal }) {
 
                       <div className="col-md-12 form-input">
                         <label>CCCD</label>
-                        <Field
+                        <input
                           type="text"
                           name="cccd"
                           placeholder="Enter your citizen ID"
                           values={props.values.cccd}
+                          onChange={handleInputChange}
                         />
                         <ErrorMessage
                           className="form-label text-danger"
@@ -215,11 +287,12 @@ function AddNew({ closeModal }) {
 
                       <div className="col-md-12 form-input">
                         <label>Username</label>
-                        <Field
+                        <input
                           type="text"
                           name="username"
                           placeholder="Enter your username"
                           values={props.values.username}
+                          onChange={handleInputChange}
                         />
                         <ErrorMessage
                           className="form-label text-danger"
@@ -230,11 +303,12 @@ function AddNew({ closeModal }) {
 
                       <div className="col-md-12 form-input">
                         <label>Password</label>
-                        <Field
+                        <input
                           type="password"
                           name="password"
                           placeholder="Enter your password"
                           values={props.values.password}
+                          onChange={handleInputChange}
                         />
                         <ErrorMessage
                           className="form-label text-danger"
@@ -245,17 +319,13 @@ function AddNew({ closeModal }) {
 
                       <div className="col-md-12 form-input">
                         <label>Chức Vụ</label>
-                        <Field
-                          as="select"
-                          name="position"
-                          className="form-control"
-                          values={props.values.position}
-                        >
+                        <Field as="select" name="position" className="form-control" values={props.values.position} onChange={handleInputChange}>
                           <option value="">Select Position</option>
                           <option value="staff">Staff</option>
                           <option value="staff">Staff</option>
                           <option value="staff">Staff</option>
                         </Field>
+
                         <ErrorMessage
                           className="form-label text-danger"
                           name="position"
@@ -265,16 +335,12 @@ function AddNew({ closeModal }) {
 
                       <div className="col-md-12 form-input">
                         <label>Phân Quyền</label>
-                        <Field
-                          as="select"
-                          name="role"
-                          className="form-control"
-                          values={props.values.role}
-                        >
+                        <Field as="select" name="position" className="form-control" values={props.values.role} onChange={handleInputChange}>
                           <option value="">Select Role</option>
                           <option value="Admin">Admin</option>
                           <option value="User">User</option>
                         </Field>
+
                         <ErrorMessage
                           className="form-label text-danger"
                           name="role"
@@ -282,7 +348,7 @@ function AddNew({ closeModal }) {
                         />
                       </div>
 
-                      <button type="submit" className="btn btn-primary">
+                      <button type="submit" className="btn btn-primary" onClick={saveNewUser}>
                         Save changes
                       </button>
                     </div>

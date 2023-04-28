@@ -13,10 +13,10 @@ const StaffLists = () => {
   //Get with axios
   useEffect(() => {
     setisLoading(true);
-  // Get axios
+    // Get axios
     axios.get("https://6448ce78e7eb3378ca364b22.mockapi.io/api/Users")
-    // axios
-    //   .get("http://localhost:8080/api/ms-user/all-users?id=ALL")
+      // axios
+      //   .get("http://localhost:8080/api/ms-user/all-users?id=ALL")
       .then((response) => {
         setAllUsers(response.data);
         setisLoading(false);
@@ -64,7 +64,7 @@ const StaffLists = () => {
             </tr>
           </thead>
           <tbody>
-            {userAllData && userAllData.map((item) => {
+            {userAllData && userAllData.map((item, index) => {
               return (
                 <tr>
                   <td>
