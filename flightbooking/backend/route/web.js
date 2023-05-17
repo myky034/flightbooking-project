@@ -3,6 +3,7 @@ import userController from '../controllers/userController';
 import userRouter from './userRouter';
 import codeRouter from './codeRouter';
 import chuyenbayRouter from './chuyenbayRouter';
+import hangveRouter from './hangveRouter';
 
 
 
@@ -19,6 +20,8 @@ let initWebRoutes = (app) => {
 
     // /api/ms-chuyenbay
     router.use('/api/ms-chuyenbay', chuyenbayRouter)
+    // /api/ms-hangve
+    router.use('/api/ms-hangve', hangveRouter)
 
     return app.use('/', router)
 }

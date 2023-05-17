@@ -21,7 +21,7 @@ let handleGetChuyenBay = async (req, res) => {
         return res.status(200).json({
             errCode: 1,
             messsage: 'Missing required params',
-            users: []
+            data: []
         })
     }
     let chuyenbay = await chuyenbayService.getAllChuyenbay(id)

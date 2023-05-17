@@ -96,7 +96,6 @@ let deleteChuyenbay = (Id) => {
         let chuyenbay = await db.ChuyenBay.findOne({
             where: { id: Id }
         })
-        console.log('Chuyến bay', chuyenbay)
         if (!chuyenbay) {
             resolve({
                 errCode: 2,
