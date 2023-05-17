@@ -2,24 +2,21 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('Allcodes', {
+        await queryInterface.createTable('Hangbays', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            key: {
+            tenhangbay: {
                 type: Sequelize.STRING
             },
-            type: {
+            logohang: {
                 type: Sequelize.STRING
             },
-            value_en: {
-                type: Sequelize.STRING
-            },
-            value_vi: {
-                type: Sequelize.STRING
+            mota: {
+                type: Sequelize.TEXT
             },
             createdAt: {
                 allowNull: true,
@@ -32,6 +29,6 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('Allcodes');
+        await queryInterface.dropTable('Hangbays');
     }
 };

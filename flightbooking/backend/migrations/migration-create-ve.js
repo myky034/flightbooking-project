@@ -2,24 +2,36 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('Allcodes', {
+        await queryInterface.createTable('Ves', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            key: {
+            hangve: {
                 type: Sequelize.STRING
             },
-            type: {
+            sohanhkhach: {
                 type: Sequelize.STRING
             },
-            value_en: {
-                type: Sequelize.STRING
+            giave: {
+                type: Sequelize.FLOAT
             },
-            value_vi: {
-                type: Sequelize.STRING
+            hanhlyxachtay: {
+                type: Sequelize.FLOAT
+            },
+            hanhlykygui: {
+                type: Sequelize.FLOAT
+            },
+            khuhoi: {
+                type: Sequelize.BOOLEAN
+            },
+            thue: {
+                type: Sequelize.FLOAT
+            },
+            tinhtrangve: {
+                type: Sequelize.BOOLEAN
             },
             createdAt: {
                 allowNull: true,
@@ -32,6 +44,6 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('Allcodes');
+        await queryInterface.dropTable('Ves');
     }
 };
