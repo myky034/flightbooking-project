@@ -8,6 +8,7 @@ import Customers from "./components/admin/Customers/Customers";
 import LoginAdmin from "./components/login/admin/LoginAdmin";
 import LoginUser from "./components/login/user/LoginUser";
 import Flight from "./components/admin/Flight/Flight";
+import TicketClass from "./components/admin/Flight/TicketsClass/TicketClass";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/staff" element={<Staffs />} />
           <Route path="/customer" element={<Customers />} />
           <Route path="/flight" element={<Flight />} />
+          <Route path="/ticketclass" element={<TicketClass/>} />
         </Routes>
       </div>
     </Router>

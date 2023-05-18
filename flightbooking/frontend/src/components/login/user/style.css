@@ -396,7 +396,7 @@ h6,
   line-height: 1.2;
 }
 
-h1,
+/* h1,
 .h1 {
   font-size: 2.5rem;
 }
@@ -424,7 +424,7 @@ h5,
 h6,
 .h6 {
   font-size: 1rem;
-}
+} */
 
 .lead {
   font-size: 1.25rem;
@@ -10874,7 +10874,7 @@ h5,
   color: #e3b04b;
 }
 
-.btn {
+/* .btn {
   cursor: pointer;
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
@@ -10905,4 +10905,4 @@ h5,
   border: 1px solid transparent;
   background: #e3b04b;
   color: #fff;
-}
+} */

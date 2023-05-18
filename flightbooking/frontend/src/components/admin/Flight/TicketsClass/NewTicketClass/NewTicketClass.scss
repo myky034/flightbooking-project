@@ -1,0 +1,13 @@
+.grid{
+    &.place-items-center {
+        &.fixed {
+            &.w-screen {
+                &.h-screen {
+                    &.bg-black {
+                        background-color: rgba(107, 107, 107, 0.466) !important;
+                    }
+                }
+            }
+        }
+    }
+}

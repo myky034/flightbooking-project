@@ -1,10 +1,9 @@
 import React from "react";
-import "./Staffs.scss";
-import SideBar from "../SideBar/SideBar";
-import StaffLists from "./Table/StaffLists";
-import StaffActivity from "./StaffActivity";
+import SideBar from "../../SideBar/SideBar";
+import NewTicketClass from "./NewTicketClass/NewTicketClass";
+import ListTicketClass from "./TableTicketClass/ListTicketClass";
 
-const Staffs = () => {
+const TicketClass = () => {
   return (
     <div className="all-staffs">
       <SideBar />
@@ -21,10 +20,17 @@ const Staffs = () => {
               className="staff-activity"
               style={{ display: "flex", justifyContent: "space-between" }}
             >
-              <h4 className="brand-color text-start" style={{ fontSize: "2rem" }}>Staffs</h4>
-              <StaffActivity />
+              <h4
+                className="brand-color text-start"
+                style={{ fontSize: "2rem" }}
+              >
+                Hạng Vé
+              </h4>
+              <NewTicketClass />
             </div>
-            <StaffLists />
+            <ListTicketClass
+              className="list-ticket"
+            />
           </div>
         </div>
       </div>
@@ -32,4 +38,4 @@ const Staffs = () => {
   );
 };
 
-export default Staffs;
+export default TicketClass;
