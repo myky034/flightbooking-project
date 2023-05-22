@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import "./NewTicketClass.scss";
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Dialog,
@@ -13,75 +12,75 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-const NewTicketClass = () => {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(!open);
-  const [submitted, setSubmitted] = useState(false);
-  const navigate = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    mode: "onBlur",
-  });
+const NewFlight = () => {
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(!open);
+    const [submitted, setSubmitted] = useState(false);
+    const navigate = useNavigate();
+    const {
+      register,
+      handleSubmit,
+      formState: { errors },
+    } = useForm({
+      mode: "onBlur",
+    });
 
-  const initialValues = {
-    tenhangve: "",
-    giavecoban: "",
-    loaive: "",
-  };
-
-  const [ticketclass, setTicketClass] = useState(initialValues);
-
-  useEffect(() => {
-    loadTicketClass();
-  }, []);
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setTicketClass({ ...ticketclass, [name]: value });
-  };
-
-  const saveTicketClass = () => {
-    let data = {
-      tenhangve: ticketclass.tenhangve,
-      loaive: ticketclass.loaive,
-      giavecoban: ticketclass.giavecoban,
+    const initialValues = {
+      tenhangve: "",
+      giavecoban: "",
+      loaive: "",
     };
 
-    axios
-      .post("http://localhost:8080/api/ms-hangve/them-hangve", data)
-      .then(function (res) {
-        setTicketClass({
-          tenhangve: res.data.tenhangve,
-          loaive: res.data.loaive,
-          giavecoban: res.data.giavecoban,
+    const [ticketclass, setTicketClass] = useState(initialValues);
+
+    useEffect(() => {
+      loadTicketClass();
+    }, []);
+
+    const handleInputChange = (event) => {
+      const { name, value } = event.target;
+      setTicketClass({ ...ticketclass, [name]: value });
+    };
+
+    const saveTicketClass = () => {
+      let data = {
+        tenhangve: ticketclass.tenhangve,
+        loaive: ticketclass.loaive,
+        giavecoban: ticketclass.giavecoban,
+      };
+
+      axios
+        .post("http://localhost:8080/api/ms-hangve/them-hangve", data)
+        .then(function (res) {
+          setTicketClass({
+            tenhangve: res.data.tenhangve,
+            loaive: res.data.loaive,
+            giavecoban: res.data.giavecoban,
+          });
+          setSubmitted(true);
+          console.log(res.data);
+          navigate("/ticketclass");
+        })
+        .catch((e) => {
+          console.log(e);
         });
-        setSubmitted(true);
-        console.log(res.data);
-        navigate("/ticketclass");
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+    };
 
-  const newTicketClass = () => {
-    setTicketClass(initialValues);
-    setSubmitted(false);
-  };
+    const newTicketClass = () => {
+      setTicketClass(initialValues);
+      setSubmitted(false);
+    };
 
-  const loadTicketClass = async () => {
-    const result = await axios.get(
-      "http://localhost:8080/api/ms-hangve/danhsach-hangve?id=ALL"
-    );
-    setTicketClass(result.data);
-  };
+    const loadTicketClass = async () => {
+      const result = await axios.get(
+        "http://localhost:8080/api/ms-hangve/danhsach-hangve?id=ALL"
+      );
+      setTicketClass(result.data);
+    };
 
   return (
     <React.Fragment>
-      <Button onClick={handleOpen}>Thêm Hạng Vé</Button>
+      <Button onClick={handleOpen}>Thêm Chuyến Bay</Button>
       <Dialog
         open={open}
         handler={handleOpen}
@@ -89,7 +88,7 @@ const NewTicketClass = () => {
         className="backdrop-blur-sm"
       >
         <div className="flex items-center justify-between">
-          <DialogHeader>Thêm hạng vé</DialogHeader>
+          <DialogHeader>Thêm chuyến bay</DialogHeader>
           <XMarkIcon
             className="mr-3 h-5 w-5"
             onClick={handleOpen}
@@ -154,6 +153,6 @@ const NewTicketClass = () => {
       </Dialog>
     </React.Fragment>
   );
-};
+}
 
-export default NewTicketClass;
+export default NewFlight

@@ -1,5 +1,5 @@
-import React , { useEffect, useState, useMemo } from 'react';
-import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
+import React, { useEffect, useState, useMemo } from "react";
+import { PencilIcon, TrashIcon, EyeIcon } from "@heroicons/react/24/solid";
 import {
   ArrowDownTrayIcon,
   MagnifyingGlassIcon,
@@ -19,56 +19,66 @@ import {
 } from "@material-tailwind/react";
 import { Spinner } from "@material-tailwind/react";
 import axios from "axios";
-import Pagination from '../../../Pagination/Pagination';
+import Pagination from "../../Pagination/Pagination";
 
-const TABLE_HEAD = ["Hạng vé", "Loại vé", "Giá vé cơ bản", "Ngày tạo", ""];
-let PageSize = 5;
+const TABLE_HEAD = [
+  "Mã chuyến bay",
+  "Tên máy bay",
+  "Hãng bay",
+  "Xuất phát",
+  "Đích đến",
+  "Ngày tạo",
+  "",
+];
+let PageSize = 6;
 
-const ListTicketClass = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [ticketclass, setTicketClass] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+const ListFlight = () => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [ticketclass, setTicketClass] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
 
-  const currentTableTicketClass = useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * PageSize;
-    const lastPageIndex = firstPageIndex + PageSize;
-    return ticketclass.slice(firstPageIndex, lastPageIndex);
-  });
-
-  useEffect(() => {
-    setIsLoading(true);
-    getTicketClass();
-  }, []);
-
-  //get method
-  const getTicketClass = async () => {
-    await axios.get(
-      "http://localhost:8080/api/ms-hangve/danhsach-hangve?id=ALL"
-    ).then(function (res) {
-      setTicketClass(res.data.data);
-      setIsLoading(false);
-      console.log(res.data);
-    }).catch((error) => {
-      console.log(error);
+    const currentTableTicketClass = useMemo(() => {
+      const firstPageIndex = (currentPage - 1) * PageSize;
+      const lastPageIndex = firstPageIndex + PageSize;
+      return ticketclass.slice(firstPageIndex, lastPageIndex);
     });
-  }
 
-  if (!ticketclass) {
-    return "Không có hạng vé nào. Hãy thêm mới hạng vé.";
-  } else if (isLoading) {
-    return (
-      <div
-        className="spinner-loading"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Spinner animation="border" />
-      </div>
-    );
-  }
+    useEffect(() => {
+      setIsLoading(true);
+      getTicketClass();
+    }, []);
+
+    //get method
+    const getTicketClass = async () => {
+      await axios
+        .get("http://localhost:8080/api/ms-hangve/danhsach-hangve?id=ALL")
+        .then(function (res) {
+          setTicketClass(res.data.data);
+          setIsLoading(false);
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    if (!ticketclass) {
+      return "Không có chuyến bay nào. Hãy thêm mới chuyến bay.";
+    } else if (isLoading) {
+      return (
+        <div
+          className="spinner-loading"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Spinner animation="border" />
+        </div>
+      );
+    }
+
   return (
     <Card className="w-full" style={{ margin: "1rem 0 0 0" }}>
       <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -111,8 +121,8 @@ const ListTicketClass = () => {
             </tr>
           </thead>
           <tbody>
-            {currentTableTicketClass && currentTableTicketClass.map(
-              (item, index) => {
+            {currentTableTicketClass &&
+              currentTableTicketClass.map((item, index) => {
                 const isLast = index === ticketclass.length - 1;
                 const classes = isLast
                   ? "p-2"
@@ -157,12 +167,35 @@ const ListTicketClass = () => {
                       </Typography>
                     </td>
                     <td className={classes}>
-                      <Tooltip content="Edit User">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {item.createdAt}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {item.createdAt}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Tooltip content="View">
+                        <IconButton variant="text" color="blue-gray">
+                          <EyeIcon className="h-4 w-4" />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip content="Edit">
                         <IconButton variant="text" color="blue-gray">
                           <PencilIcon className="h-4 w-4" />
                         </IconButton>
                       </Tooltip>
-                      <Tooltip content="Delete User">
+                      <Tooltip content="Delete">
                         <IconButton variant="text" color="blue-gray">
                           <TrashIcon className="h-4 w-4" />
                         </IconButton>
@@ -170,8 +203,7 @@ const ListTicketClass = () => {
                     </td>
                   </tr>
                 );
-              }
-            )}
+              })}
           </tbody>
         </table>
       </CardBody>
@@ -188,4 +220,4 @@ const ListTicketClass = () => {
   );
 }
 
-export default ListTicketClass
+export default ListFlight

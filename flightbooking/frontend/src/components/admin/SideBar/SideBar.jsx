@@ -126,13 +126,18 @@ const SideBar = () => {
                   <ListItemPrefix>
                     <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                   </ListItemPrefix>
-                  Analytics
+                  <Link
+                    to="/flight"
+                    className="block antialiased font-sans text-base leading-relaxed text-blue-gray-900 font-normal hover:text-blue-gray-900 focus:text-blue-gray-900 active:text-blue-gray-900"
+                  >
+                    Chuyến Bay
+                  </Link>
                 </ListItem>
                 <ListItem>
                   <ListItemPrefix>
                     <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                   </ListItemPrefix>
-                  Reporting
+                  Vé
                 </ListItem>
                 <ListItem>
                   <ListItemPrefix>

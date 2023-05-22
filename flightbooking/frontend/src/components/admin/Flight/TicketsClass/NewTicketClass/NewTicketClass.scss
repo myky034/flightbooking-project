@@ -1,13 +1,25 @@
-.grid{
-    &.place-items-center {
-        &.fixed {
-            &.w-screen {
-                &.h-screen {
-                    &.bg-black {
-                        background-color: rgba(107, 107, 107, 0.466) !important;
-                    }
-                }
-            }
+.grid {
+  &.place-items-center {
+    &.fixed {
+      &.w-screen {
+        &.h-screen {
+          &.bg-black {
+            background-color: rgba(107, 107, 107, 0.466) !important;
+          }
         }
+      }
     }
+  }
+
+  .errorMsg {
+    max-width: 350px;
+    color: #f21e08;
+    font-size: 14px;
+    font-weight: 300;
+
+    &::before {
+      display: inline;
+      content: "⚠ ";
+    }
+  }
 }
