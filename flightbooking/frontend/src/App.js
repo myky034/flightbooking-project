@@ -5,15 +5,23 @@ import "./App.css";
 import DashBoard from "./components/admin/DashBoard/DashBoard";
 import Staffs from "./components/admin/Staffs/Staffs";
 import Customers from "./components/admin/Customers/Customers";
+import LoginAdmin from "./components/login/admin/LoginAdmin";
+import LoginUser from "./components/login/user/LoginUser";
+import Flight from "./components/admin/Flight/Flight";
+import TicketClass from "./components/admin/Flight/TicketsClass/TicketClass";
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Routes>
+          <Route path="/" element={<LoginAdmin />} />
+          <Route path="/loginuser" element={<LoginUser />} />
           <Route path="/dashboard" element={<DashBoard />} />
           <Route path="/staff" element={<Staffs />} />
           <Route path="/customer" element={<Customers />} />
+          <Route path="/flight" element={<Flight />} />
+          <Route path="/ticketclass" element={<TicketClass/>} />
         </Routes>
       </div>
     </Router>
