@@ -5,7 +5,8 @@ import db from "../models/index"
 let createChuyenBay = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!data.tgkhoihanh || !data.tgden || !data.tgbaydukien || !data.dichden) {
+            if (!data.tgkhoihanh || !data.tgden ||
+                !data.tgbaydukien || !data.dichden || !data.machuyenbay) {
                 resolve({
                     errCode: 1,
                     errMessage: "Missing params input type"
@@ -13,6 +14,7 @@ let createChuyenBay = (data) => {
             } else {
                 let res = {}
                 let resData = await db.ChuyenBay.create({
+                    machuyenbay: data.machuyenbay,
                     tgkhoihanh: data.tgkhoihanh,
                     tgden: data.tgden,
                     tgbaydukien: data.tgbaydukien,
@@ -65,7 +67,8 @@ let editChuyenbay = (data) => {
                 raw: false
             })
             if (chuyenbay) {
-                chuyenbay.tgkhoihanh = data.tgkhoihanh,
+                chuyenbay.machuyenbay = data.machuyenbay,
+                    chuyenbay.tgkhoihanh = data.tgkhoihanh,
                     chuyenbay.tgden = data.tgden,
                     chuyenbay.tgbaydukien = data.tgbaydukien,
                     chuyenbay.xuatphat = data.xuatphat,

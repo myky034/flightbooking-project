@@ -28,17 +28,17 @@ let createHangVe = (data) => {
     })
 }
 
-let getAllHangVe = (Input) => {
+let getAllSanBay = (Input) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let hangve = ''
+            let SanBay = ''
             if (Input === 'ALL') {
-                hangve = await db.HangVe.findAll()
+                SanBay = await db.SanBay.findAll()
             }
             if (Input && Input !== 'ALL') {
-                hangve = await db.HangVe.findOne({ where: { id: Input } })
+                SanBay = await db.SanBay.findOne({ where: { id: Input } })
             }
-            resolve(hangve)
+            resolve(SanBay)
         }
         catch (e) {
             console.log(e)
@@ -47,7 +47,7 @@ let getAllHangVe = (Input) => {
     })
 }
 
-let editHangVe = (data) => {
+let editSanBay = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             if (!data.id) {
@@ -56,20 +56,20 @@ let editHangVe = (data) => {
                     message: 'Missing required id'
                 })
             }
-            let hangve = await db.HangVe.findOne({
+            let SanBay = await db.SanBay.findOne({
                 where: { id: data.id },
                 raw: false
             })
-            if (hangve) {
-                hangve.tenhangve = data.tenhangve,
-                    hangve.loaive = data.loaive,
-                    hangve.giavecoban = data.giavecoban
-                await hangve.save()
+            if (SanBay) {
+                SanBay.tenSanBay = data.tenSanBay,
+                    SanBay.loaive = data.loaive,
+                    SanBay.giavecoban = data.giavecoban
+                await SanBay.save()
 
                 resolve({
                     errCode: 0,
                     message: 'Cập nhật hạng vé thành công',
-                    data: hangve
+                    data: SanBay
                 })
             } else {
                 resolve({
@@ -83,18 +83,18 @@ let editHangVe = (data) => {
     })
 }
 
-let deleteHangVe = (Id) => {
+let deleteSanBay = (Id) => {
     return new Promise(async (resolve, reject) => {
-        let hangve = await db.HangVe.findOne({
+        let SanBay = await db.SanBay.findOne({
             where: { id: Id }
         })
-        if (!hangve) {
+        if (!SanBay) {
             resolve({
                 errCode: 2,
                 message: `Hạng vé không tồn tại trong hệ thống`
             })
         }
-        await db.HangVe.destroy({
+        await db.SanBay.destroy({
             where: { id: Id }
         })
         resolve({
@@ -106,7 +106,7 @@ let deleteHangVe = (Id) => {
 
 module.exports = {
     createHangVe,
-    getAllHangVe,
-    editHangVe,
-    deleteHangVe
+    getAllSanBay,
+    editSanBay,
+    deleteSanBay
 }

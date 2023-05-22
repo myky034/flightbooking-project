@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
     ChuyenBay.init({
+        machuyenbay: DataTypes.STRING,
         tgkhoihanh: DataTypes.DATE,
         tgden: DataTypes.DATE,
         tgbaydukien: DataTypes.DATE,
