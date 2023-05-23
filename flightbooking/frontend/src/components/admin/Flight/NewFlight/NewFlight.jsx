@@ -26,12 +26,17 @@ const NewFlight = () => {
     });
 
     const initialValues = {
-      tenhangve: "",
-      giavecoban: "",
-      loaive: "",
+      machuyenbay: "",
+      tgkhoihanh: "",
+      tgden: "",
+      tgbaydukien: "",
+      xuatphat: "",
+      dichden: "",
+      soghetrong: "",
+      tinhtrang: "",
     };
 
-    const [ticketclass, setTicketClass] = useState(initialValues);
+    const [newflight, setNewFlight] = useState(initialValues);
 
     useEffect(() => {
       loadTicketClass();
@@ -39,27 +44,37 @@ const NewFlight = () => {
 
     const handleInputChange = (event) => {
       const { name, value } = event.target;
-      setTicketClass({ ...ticketclass, [name]: value });
+      setNewFlight({ ...newflight, [name]: value });
     };
 
-    const saveTicketClass = () => {
+    const saveNewFlight = () => {
       let data = {
-        tenhangve: ticketclass.tenhangve,
-        loaive: ticketclass.loaive,
-        giavecoban: ticketclass.giavecoban,
+        machuyenbay: newflight.machuyenbay,
+        tgkhoihanh: newflight.tgkhoihanh,
+        tgden: newflight.tgden,
+        tgbaydukien: newflight.tgbaydukien,
+        xuatphat: newflight.xuatphat,
+        dichden: newflight.dichden,
+        soghetrong: newflight.soghetrong,
+        tinhtrang: newflight.tinhtrang,
       };
 
       axios
-        .post("http://localhost:8080/api/ms-hangve/them-hangve", data)
+        .post("http://localhost:8080/api/ms-chuyenbay/them-chuyenbay", data)
         .then(function (res) {
-          setTicketClass({
-            tenhangve: res.data.tenhangve,
-            loaive: res.data.loaive,
-            giavecoban: res.data.giavecoban,
+          setNewFlight({
+            machuyenbay: res.data.machuyenbay,
+            tgkhoihanh: res.data.tgkhoihanh,
+            tgden: res.data.tgden,
+            tgbaydukien: res.data.tgbaydukien,
+            xuatphat: res.data.xuatphat,
+            dichden: res.data.dichden,
+            soghetrong: res.data.soghetrong,
+            tinhtrang: res.data.tinhtrang,
           });
           setSubmitted(true);
           console.log(res.data);
-          navigate("/ticketclass");
+          navigate("/flight");
         })
         .catch((e) => {
           console.log(e);
@@ -67,15 +82,15 @@ const NewFlight = () => {
     };
 
     const newTicketClass = () => {
-      setTicketClass(initialValues);
+      setNewFlight(initialValues);
       setSubmitted(false);
     };
 
     const loadTicketClass = async () => {
       const result = await axios.get(
-        "http://localhost:8080/api/ms-hangve/danhsach-hangve?id=ALL"
+        "http://localhost:8080/api/ms-chuyenbay/danhsach-chuyenbay?id=ALL"
       );
-      setTicketClass(result.data);
+      setNewFlight(result.data);
     };
 
   return (
@@ -98,9 +113,16 @@ const NewFlight = () => {
         <DialogBody divider>
           <div className="grid gap-3">
             <Input
-              label="Tên hạng vé"
-              name="tenhangve"
-              value={ticketclass.tenhangve}
+              label="Mã chuyến bay"
+              name="machuyenbay"
+              value={newflight.machuyenbay}
+              onChange={handleInputChange}
+              // {...register("tenhangve", { required: true })}
+            />
+            <Input
+              label="Xuất phát"
+              name="xuatphat"
+              value={newflight.xuatphat}
               onChange={handleInputChange}
               // {...register("tenhangve", { required: true })}
             />
@@ -110,9 +132,9 @@ const NewFlight = () => {
               </p>
             )} */}
             <Input
-              label="Loại vé"
-              name="loaive"
-              value={ticketclass.loaive}
+              label="Đích đến"
+              name="dichden"
+              value={newflight.dichden}
               onChange={handleInputChange}
               // {...register("loaive", { required: true })}
             />
@@ -122,12 +144,11 @@ const NewFlight = () => {
               </p>
             )} */}
             <Input
-              label="Giá vé"
-              name="giavecoban"
-              value={ticketclass.giavecoban}
+              label="Thời gian khởi hành"
+              name="tgkhoihanh"
+              value={newflight.tgkhoihanh}
               onChange={handleInputChange}
-              type="number"
-              step={0.1}
+              type="text"
               // {...register("giavecoban", { required: true })}
             />
             {/* {errors.giavecoban && errors.giavecoban.type === "required" && (
@@ -135,6 +156,38 @@ const NewFlight = () => {
                 This is required.
               </p>
             )} */}
+            <Input
+              label="Thời gian đến"
+              name="tgden"
+              value={newflight.tgden}
+              onChange={handleInputChange}
+              type="text"
+              // {...register("giavecoban", { required: true })}
+            />
+            <Input
+              label="Thời gian bay dự kiến"
+              name="tgbaydukien"
+              value={newflight.tgbaydukien}
+              onChange={handleInputChange}
+              type="number"
+              // {...register("giavecoban", { required: true })}
+            />
+            <Input
+              label="Số ghế trống"
+              name="soghetrong"
+              value={newflight.soghetrong}
+              onChange={handleInputChange}
+              type="number"
+              // {...register("giavecoban", { required: true })}
+            />
+            <Input
+              label="Tình trạng"
+              name="tinhtrang"
+              value={newflight.tinhtrang}
+              onChange={handleInputChange}
+              type="number"
+              // {...register("giavecoban", { required: true })}
+            />
           </div>
         </DialogBody>
         <DialogFooter className="space-x-2">
@@ -145,7 +198,7 @@ const NewFlight = () => {
             variant="primary"
             color="blue"
             type="submit"
-            onClick={saveTicketClass}
+            onClick={saveNewFlight}
           >
             Save
           </Button>

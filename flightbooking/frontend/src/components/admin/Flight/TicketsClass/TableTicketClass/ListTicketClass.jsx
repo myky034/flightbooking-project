@@ -70,121 +70,127 @@ const ListTicketClass = () => {
     );
   }
   return (
-    <Card className="w-full" style={{ margin: "1rem 0 0 0" }}>
-      <CardHeader floated={false} shadow={false} className="rounded-none">
-        <div
-          className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center"
-          style={{ justifyContent: "flex-end" }}
-        >
-          <div className="flex w-full shrink-0 gap-2 md:w-max">
-            <div className="w-full md:w-72">
-              <Input
-                label="Search"
-                icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-              />
+    <>
+      <Card className="w-full" style={{ margin: "1rem 0 0 0" }}>
+        <CardHeader floated={false} shadow={false} className="rounded-none">
+          <div
+            className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center"
+            style={{ justifyContent: "flex-end" }}
+          >
+            <div className="flex w-full shrink-0 gap-2 md:w-max">
+              <div className="w-full md:w-72">
+                <Input
+                  label="Search"
+                  icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+                />
+              </div>
+              <Button
+                className="flex items-center gap-3"
+                color="blue"
+                size="sm"
+              >
+                <ArrowDownTrayIcon strokeWidth={2} className="h-4 w-4" />{" "}
+                Download
+              </Button>
             </div>
-            <Button className="flex items-center gap-3" color="blue" size="sm">
-              <ArrowDownTrayIcon strokeWidth={2} className="h-4 w-4" /> Download
-            </Button>
           </div>
-        </div>
-      </CardHeader>
-      <CardBody className="overflow-scroll px-0" style={{ padding: "0" }}>
-        <table className="w-full min-w-max table-auto">
-          <thead>
-            <tr>
-              {TABLE_HEAD.map((head) => (
-                <th
-                  key={head}
-                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 align-center"
-                >
-                  <Typography
-                    variant="large"
-                    color="blue-gray"
-                    className="font-bold leading-none opacity-70 align-center"
-                    style={{ margin: "1rem 0 1rem 0" }}
+        </CardHeader>
+        <CardBody className="overflow-scroll px-0" style={{ padding: "0" }}>
+          <table className="w-full min-w-max table-auto">
+            <thead>
+              <tr>
+                {TABLE_HEAD.map((head) => (
+                  <th
+                    key={head}
+                    className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 align-center"
                   >
-                    {head}
-                  </Typography>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {currentTableTicketClass && currentTableTicketClass.map(
-              (item, index) => {
-                const isLast = index === ticketclass.length - 1;
-                const classes = isLast
-                  ? "p-2"
-                  : "p-2 border-b border-blue-gray-50";
+                    <Typography
+                      variant="large"
+                      color="blue-gray"
+                      className="font-bold leading-none opacity-70 align-center"
+                      style={{ margin: "1rem 0 1rem 0" }}
+                    >
+                      {head}
+                    </Typography>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {currentTableTicketClass &&
+                currentTableTicketClass.map((item, index) => {
+                  const isLast = index === ticketclass.length - 1;
+                  const classes = isLast
+                    ? "p-2"
+                    : "p-2 border-b border-blue-gray-50";
 
-                return (
-                  <tr key={index}>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-bold"
-                      >
-                        {item.tenhangve}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {item.loaive}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {item.giavecoban}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {item.createdAt}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Tooltip content="Edit User">
-                        <IconButton variant="text" color="blue-gray">
-                          <PencilIcon className="h-4 w-4" />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip content="Delete User">
-                        <IconButton variant="text" color="blue-gray">
-                          <TrashIcon className="h-4 w-4" />
-                        </IconButton>
-                      </Tooltip>
-                    </td>
-                  </tr>
-                );
-              }
-            )}
-          </tbody>
-        </table>
-      </CardBody>
-      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        <Pagination
-          className="pagination-bar"
-          currentPage={currentPage}
-          totalCount={ticketclass.length}
-          pageSize={PageSize}
-          onPageChange={(page) => setCurrentPage(page)}
-        />
-      </CardFooter>
-    </Card>
+                  return (
+                    <tr key={index}>
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-bold"
+                        >
+                          {item.tenhangve}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {item.loaive}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {item.giavecoban}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {item.createdAt}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
+                        <Tooltip content="Edit User">
+                          <IconButton variant="text" color="blue-gray">
+                            <PencilIcon className="h-4 w-4" />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip content="Delete User">
+                          <IconButton variant="text" color="blue-gray">
+                            <TrashIcon className="h-4 w-4" />
+                          </IconButton>
+                        </Tooltip>
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        </CardBody>
+        <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+          <Pagination
+            className="pagination-bar"
+            currentPage={currentPage}
+            totalCount={ticketclass.length}
+            pageSize={PageSize}
+            onPageChange={(page) => setCurrentPage(page)}
+          />
+        </CardFooter>
+      </Card>
+    </>
   );
 }
 
