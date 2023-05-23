@@ -13,18 +13,21 @@ module.exports = (sequelize, DataTypes) => {
             // define association here
         }
     }
-    ChuyenBay.init({
+    ChuyenBay.init(
+      {
         machuyenbay: DataTypes.STRING,
         tgkhoihanh: DataTypes.DATE,
         tgden: DataTypes.DATE,
-        tgbaydukien: DataTypes.DATE,
+        tgbaydukien: DataTypes.INTEGER,
         xuatphat: DataTypes.STRING,
         dichden: DataTypes.STRING,
         soghetrong: DataTypes.STRING,
-        tinhtrang: DataTypes.BOOLEAN
-    }, {
+        tinhtrang: DataTypes.BOOLEAN,
+      },
+      {
         sequelize,
-        modelName: 'ChuyenBay',
-    });
+        modelName: "ChuyenBay",
+      }
+    );
     return ChuyenBay;
 };
