@@ -139,12 +139,6 @@ const SideBar = () => {
                   </ListItemPrefix>
                   Vé
                 </ListItem>
-                <ListItem>
-                  <ListItemPrefix>
-                    <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                  </ListItemPrefix>
-                  Projects
-                </ListItem>
               </List>
             </AccordionBody>
           </Accordion>
@@ -182,7 +176,10 @@ const SideBar = () => {
                   <ListItemPrefix>
                     <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                   </ListItemPrefix>
-                  <Link className="block antialiased font-sans text-base leading-relaxed text-blue-gray-900 font-normal hover:text-blue-gray-900 focus:text-blue-gray-900 active:text-blue-gray-900">
+                  <Link
+                    to="/airport"
+                    className="block antialiased font-sans text-base leading-relaxed text-blue-gray-900 font-normal hover:text-blue-gray-900 focus:text-blue-gray-900 active:text-blue-gray-900"
+                  >
                     Sân Bay
                   </Link>
                 </ListItem>
@@ -193,6 +190,12 @@ const SideBar = () => {
                   <Link className="block antialiased font-sans text-base leading-relaxed text-blue-gray-900 font-normal hover:text-blue-gray-900 focus:text-blue-gray-900 active:text-blue-gray-900">
                     Chặng Bay
                   </Link>
+                </ListItem>
+                <ListItem>
+                  <ListItemPrefix>
+                    <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                  </ListItemPrefix>
+                  Hãng Bay
                 </ListItem>
                 <ListItem>
                   <ListItemPrefix>

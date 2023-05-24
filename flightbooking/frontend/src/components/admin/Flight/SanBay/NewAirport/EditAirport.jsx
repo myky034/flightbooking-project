@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import SideBar from "../../SideBar/SideBar";
+import SideBar from "../../../SideBar/SideBar";
 import {
   Card,
   Input,
@@ -9,37 +9,30 @@ import {
 } from "@material-tailwind/react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
-const EditFlight = () => {
+const EditAirport = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const initialValues = {
     id: "",
-    machuyenbay: "",
-    tgkhoihanh: "",
-    tgden: "",
-    tgbaydukien: "",
-    xuatphat: "",
-    dichden: "",
-    soghetrong: "",
-    tinhtrang: "",
+    tensanbay: "",
+    maICAO_IATA: "",
+    tinh: "",
+    soduongbang: "",
+    loaiduongbang: "",
+    chieudaidb: "",
+    baydem: "",
+    bayquocte: "",
   };
 
-  const [newflight, setNewFlight] = useState(initialValues);
-  const [selectdate, setSelectDate] = useState(new Date());
-
-  useEffect(() => {
-    editFlight();
-  }, []);
+  const [airport, setAirport] = useState(initialValues);
 
   //get method
-  const editFlight = async () => {
+  const editAirport = async () => {
     axios
-      .get("http://localhost:8080/api/ms-chuyenbay/danhsach-chuyenbay?id=" + id)
+      .get("http://localhost:8080/api/ms-sanbay/danhsach-sanbay?id=" + id)
       .then(function (res) {
-        setNewFlight(res.data.data);
+        setAirport(res.data.data);
         console.log(res.data);
       })
       .catch((error) => {
@@ -49,39 +42,39 @@ const EditFlight = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setNewFlight({ ...newflight, [name]: value });
+    setAirport({ ...airport, [name]: value });
   };
 
   const handleClose = () => {
-    setNewFlight(initialValues);
-    navigate("/flight");
+    setAirport(initialValues);
+    navigate("/airport");
   };
 
-  const updateFlight = () => {
+  const updateAirport = async () => {
     let data = {
-      id: newflight.id,
-      machuyenbay: newflight.machuyenbay,
-      tgkhoihanh: selectdate,
-      tgden: selectdate,
-      tgbaydukien: newflight.tgbaydukien,
-      xuatphat: newflight.xuatphat,
-      dichden: newflight.dichden,
-      soghetrong: newflight.soghetrong,
-      tinhtrang: newflight.tinhtrang,
+      id: airport.id,
+      tensanbay: airport.tensanbay,
+      maICAO_IATA: airport.maICAO_IATA,
+      tinh: airport.tinh,
+      soduongbang: airport.soduongbang,
+      loaiduongbang: airport.loaiduongbang,
+      chieudaidb: airport.chieudaidb,
+      baydem: airport.baydem,
+      bayquocte: airport.bayquocte,
     };
 
     //put method
-    axios
-      .put("http://localhost:8080/api/ms-chuyenbay/chinhsua-chuyenbay", data)
+    await axios
+      .put("http://localhost:8080/api/ms-sanbay/chinhsua-sanbay", data)
       .then(function (res) {
-        setNewFlight(res.data.data);
+        setAirport(res.data.data);
         console.log(res.data);
-        navigate("/flight");
+        navigate("/airport");
       })
       .catch((error) => {
         console.log(error);
       });
-  };
+  }
 
   return (
     <div className="all-staffs">
@@ -103,7 +96,7 @@ const EditFlight = () => {
                 className="brand-color text-start"
                 style={{ fontSize: "2rem" }}
               >
-                Chỉnh Sửa Chuyến Bay
+                Chỉnh Sửa Sân Bay
               </h4>
             </div>
             <form className="mt-8 mb-2">
@@ -115,33 +108,33 @@ const EditFlight = () => {
                   <Input
                     type="text"
                     size="lg"
-                    label="Mã chuyến bay"
-                    name="machuyenbay"
-                    value={newflight.machuyenbay}
+                    label="Mã sân bay"
+                    name="maICAO_IATA"
+                    value={airport.maICAO_IATA}
                     onChange={handleInputChange}
                   />
                   <Input
                     type="text"
                     size="lg"
-                    label="Xuất phát"
-                    name="xuatphat"
-                    value={newflight.xuatphat}
+                    label="Tên sân bay"
+                    name="tensanbay"
+                    value={airport.tensanbay}
                     onChange={handleInputChange}
                   />
                   <Input
                     type="text"
                     size="lg"
-                    label="Đích đến"
-                    name="dichden"
-                    value={newflight.dichden}
+                    label="Tỉnh"
+                    name="tinh"
+                    value={airport.tinh}
                     onChange={handleInputChange}
                   />
                   <Input
                     type="number"
                     size="lg"
-                    label="Số ghế trống"
-                    name="soghetrong"
-                    value={newflight.soghetrong}
+                    label="Số đường băng"
+                    name="soduongbang"
+                    value={airport.soduongbang}
                     onChange={handleInputChange}
                   />
                 </div>
@@ -149,37 +142,41 @@ const EditFlight = () => {
                   className="mb-4 flex flex-col gap-6"
                   style={{ width: "100%" }}
                 >
-                  <DatePicker
-                    selected={selectdate}
-                    value={selectdate}
-                    onChange={(date) => setSelectDate(date)}
-                    name="tgkhoihanh"
-                  />
-                  <DatePicker
-                    selected={selectdate}
-                    value={selectdate}
-                    onChange={(date) => setSelectDate(date)}
-                    name="tgden"
-                  />
                   <Input
                     size="lg"
-                    name="tgbaydukien"
-                    label="Thời gian bay dự kiến"
-                    value={newflight.tgbaydukien}
+                    name="loaiduongbang"
+                    label="Loại đường băng"
+                    value={airport.loaiduongbang}
                     onChange={handleInputChange}
                   />
                   <Input
                     type="text"
                     size="lg"
-                    label="Tình trạng"
-                    name="tinhtrang"
-                    value={newflight.tinhtrang}
+                    label="Chiều dài đường băng"
+                    name="chieudaidb"
+                    value={airport.chieudaidb}
+                    onChange={handleInputChange}
+                  />
+                  <Input
+                    type="text"
+                    size="lg"
+                    label="Bay đêm"
+                    name="baydem"
+                    value={airport.baydem}
+                    onChange={handleInputChange}
+                  />
+                  <Input
+                    type="text"
+                    size="lg"
+                    label="Bay quốc tế"
+                    name="bayquocte"
+                    value={airport.bayquocte}
                     onChange={handleInputChange}
                   />
                 </div>
               </div>
               <div className="mb-4" style={{ justifyContent: "flex-end" }}>
-                <Button className="mt-6" onClick={updateFlight}>
+                <Button className="mt-6" onClick={updateAirport}>
                   Update
                 </Button>
                 <Button className="mt-6" onClick={handleClose}>
@@ -192,6 +189,6 @@ const EditFlight = () => {
       </div>
     </div>
   );
-};
+}
 
-export default EditFlight;
+export default EditAirport

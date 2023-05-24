@@ -21,10 +21,11 @@ import { Spinner } from "@material-tailwind/react";
 import axios from "axios";
 import Pagination from "../../Pagination/Pagination";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 const TABLE_HEAD = [
   "Mã chuyến bay",
-  "Thời gian khởi hành",
+  "Thời gian bay",
   "Thời gian bay dự kiến",
   "Xuất phát",
   "Đích đến",
@@ -153,6 +154,7 @@ const ListFlight = () => {
                         variant="small"
                         color="blue-gray"
                         className="font-bold"
+                        style={{ marginBottom: "0" }}
                       >
                         {item.machuyenbay}
                       </Typography>
@@ -163,15 +165,18 @@ const ListFlight = () => {
                           variant="small"
                           color="blue-gray"
                           className="font-normal capitalize"
+                          style={{ marginBottom: "0" }}
                         >
-                          {item.tgkhoihanh}
+                          {moment(item.tgkhoihanh).format("DD/MM/YYYY")}
                         </Typography>
+                        <Typography style={{ marginBottom: "0" }}>-</Typography>
                         <Typography
                           variant="small"
                           color="blue-gray"
                           className="font-normal capitalize"
+                          style={{ marginBottom: "0" }}
                         >
-                          {item.tgden}
+                          {moment(item.tgden).format("DD/MM/YYYY")}
                         </Typography>
                       </div>
                     </td>
@@ -180,6 +185,7 @@ const ListFlight = () => {
                         variant="small"
                         color="blue-gray"
                         className="font-normal"
+                        style={{ marginBottom: "0" }}
                       >
                         {item.tgbaydukien}
                       </Typography>
@@ -189,6 +195,7 @@ const ListFlight = () => {
                         variant="small"
                         color="blue-gray"
                         className="font-normal"
+                        style={{ marginBottom: "0" }}
                       >
                         {item.xuatphat}
                       </Typography>
@@ -198,6 +205,7 @@ const ListFlight = () => {
                         variant="small"
                         color="blue-gray"
                         className="font-normal"
+                        style={{ marginBottom: "0" }}
                       >
                         {item.dichden}
                       </Typography>
@@ -207,8 +215,9 @@ const ListFlight = () => {
                         variant="small"
                         color="blue-gray"
                         className="font-normal"
+                        style={{ marginBottom: "0" }}
                       >
-                        {item.createdAt}
+                        {moment(item.createdAt).format("DD/MM/YYYY")}
                       </Typography>
                     </td>
                     <td className={classes}>
@@ -228,7 +237,11 @@ const ListFlight = () => {
                         </IconButton>
                       </Tooltip>
                       <Tooltip content="Delete">
-                        <IconButton variant="text" color="blue-gray" onClick={() => handleDelete(item.id)}>
+                        <IconButton
+                          variant="text"
+                          color="blue-gray"
+                          onClick={() => handleDelete(item.id)}
+                        >
                           <TrashIcon className="h-4 w-4" />
                         </IconButton>
                       </Tooltip>

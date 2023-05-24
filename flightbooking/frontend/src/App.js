@@ -11,11 +11,13 @@ import Flight from "./components/admin/Flight/Flight";
 import TicketClass from "./components/admin/Flight/TicketsClass/TicketClass";
 import EditFlight from './components/admin/Flight/EditFlight/EditFlight';
 import ScrollToTop from './components/admin/ScrollToTop/ScrollToTop';
+import SanBay from "./components/admin/Flight/SanBay/SanBay";
+import EditAirport from './components/admin/Flight/SanBay/NewAirport/EditAirport';
 
 function App() {
   return (
     <Router>
-      <ScrollToTop/>
+      <ScrollToTop />
       <div className="App">
         <Routes>
           <Route path="/" element={<LoginAdmin />} />
@@ -27,6 +29,8 @@ function App() {
           <Route path="/flightdetail/:id" element={<Flight />} />
           <Route path="/editflight/:id" element={<EditFlight />} />
           <Route path="/ticketclass" element={<TicketClass />} />
+          <Route path="/airport" element={<SanBay />} />
+          <Route path="/editairport/:id" element={<EditAirport />} />
         </Routes>
       </div>
     </Router>

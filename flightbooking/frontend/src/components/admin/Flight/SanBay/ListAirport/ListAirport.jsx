@@ -1,5 +1,5 @@
-import React , { useEffect, useState, useMemo } from 'react';
-import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
+import React, { useEffect, useState, useMemo } from "react";
+import { PencilIcon, TrashIcon, EyeIcon } from "@heroicons/react/24/solid";
 import {
   ArrowDownTrayIcon,
   MagnifyingGlassIcon,
@@ -20,56 +20,60 @@ import {
 import { Spinner } from "@material-tailwind/react";
 import axios from "axios";
 import Pagination from "../../../Pagination/Pagination";
+import { Link } from "react-router-dom";
 import moment from "moment";
 
-const TABLE_HEAD = ["Hạng vé", "Loại vé", "Giá vé cơ bản", "Ngày tạo", ""];
+const TABLE_HEAD = ["Mã sân bay", "Tên sân bay", "Tỉnh", "Ngày tạo", ""];
 let PageSize = 5;
 
-const ListTicketClass = () => {
+const ListAirport = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [ticketclass, setTicketClass] = useState([]);
+  const [airport, setAirport] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
   const currentTableTicketClass = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
-    return ticketclass.slice(firstPageIndex, lastPageIndex);
+    return airport.slice(firstPageIndex, lastPageIndex);
   });
+
+  useMemo(() => {
+    window.scrollTo({ top: 0 });
+  }, [currentPage]);
 
   useEffect(() => {
     setIsLoading(true);
-    getTicketClass();
+    getAirport();
   }, []);
 
   //get method
-  const getTicketClass = async () => {
-    await axios.get(
-      "http://localhost:8080/api/ms-hangve/danhsach-hangve?id=ALL"
-    ).then(function (res) {
-      setTicketClass(res.data.data);
-      setIsLoading(false);
-      console.log(res.data);
-    }).catch((error) => {
-      console.log(error);
-    });
-  }
+  const getAirport = async () => {
+    await axios
+      .get("http://localhost:8080/api/ms-sanbay/danhsach-sanbay?id=ALL")
+      .then(function (res) {
+        setAirport(res.data.data);
+        setIsLoading(false);
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-  if (!ticketclass) {
-    return "Không có hạng vé nào. Hãy thêm mới hạng vé.";
-  } else if (isLoading) {
-    return (
-      <div
-        className="spinner-loading"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Spinner animation="border" />
-      </div>
-    );
-  }
+  //delete method
+  const handleDelete = async (id) => {
+    await axios
+      .delete(`http://localhost:8080/api/ms-sanbay/xoa-sanbay?id=${id}`)
+      .then(function (res) {
+        setAirport(res.data.data);
+        console.log(res.data);
+        window.location.reload();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
     <>
       <Card className="w-full" style={{ margin: "1rem 0 0 0" }}>
@@ -120,7 +124,7 @@ const ListTicketClass = () => {
             <tbody>
               {currentTableTicketClass &&
                 currentTableTicketClass.map((item, index) => {
-                  const isLast = index === ticketclass.length - 1;
+                  const isLast = index === airport.length - 1;
                   const classes = isLast
                     ? "p-2"
                     : "p-2 border-b border-blue-gray-50";
@@ -134,7 +138,7 @@ const ListTicketClass = () => {
                           className="font-bold"
                           style={{ marginBottom: "0" }}
                         >
-                          {item.tenhangve}
+                          {item.maICAO_IATA}
                         </Typography>
                       </td>
                       <td className={classes}>
@@ -144,7 +148,7 @@ const ListTicketClass = () => {
                           className="font-normal"
                           style={{ marginBottom: "0" }}
                         >
-                          {item.loaive}
+                          {item.tensanbay}
                         </Typography>
                       </td>
                       <td className={classes}>
@@ -154,7 +158,7 @@ const ListTicketClass = () => {
                           className="font-normal"
                           style={{ marginBottom: "0" }}
                         >
-                          {item.giavecoban}
+                          {item.tinh}
                         </Typography>
                       </td>
                       <td className={classes}>
@@ -168,13 +172,27 @@ const ListTicketClass = () => {
                         </Typography>
                       </td>
                       <td className={classes}>
+                        <Tooltip content="View">
+                          <IconButton variant="text" color="blue-gray">
+                            <EyeIcon className="h-4 w-4" />
+                          </IconButton>
+                        </Tooltip>
                         <Tooltip content="Edit User">
                           <IconButton variant="text" color="blue-gray">
-                            <PencilIcon className="h-4 w-4" />
+                            <Link
+                              to={`/editairport/${item.id}`}
+                              className="block antialiased font-sans text-base leading-relaxed text-blue-gray-900 font-normal hover:text-blue-gray-900 focus:text-blue-gray-900 active:text-blue-gray-900"
+                            >
+                              <PencilIcon className="h-4 w-4" />
+                            </Link>
                           </IconButton>
                         </Tooltip>
                         <Tooltip content="Delete User">
-                          <IconButton variant="text" color="blue-gray">
+                          <IconButton
+                            variant="text"
+                            color="blue-gray"
+                            onClick={() => handleDelete(item.id)}
+                          >
                             <TrashIcon className="h-4 w-4" />
                           </IconButton>
                         </Tooltip>
@@ -189,7 +207,7 @@ const ListTicketClass = () => {
           <Pagination
             className="pagination-bar"
             currentPage={currentPage}
-            totalCount={ticketclass.length}
+            totalCount={airport.length}
             pageSize={PageSize}
             onPageChange={(page) => setCurrentPage(page)}
           />
@@ -199,4 +217,4 @@ const ListTicketClass = () => {
   );
 }
 
-export default ListTicketClass
+export default ListAirport
