@@ -6,6 +6,7 @@ import chuyenbayRouter from './chuyenbayRouter';
 import hangveRouter from './hangveRouter';
 import sanbayRouter from './sanbayRouter'
 import changbayRouter from './changbayRouter'
+import maybayRouter from './maybayRouter'
 
 
 
@@ -29,6 +30,8 @@ let initWebRoutes = (app) => {
     router.use('/api/ms-sanbay', sanbayRouter)
     // /api/ms-sanbay
     router.use('/api/ms-changbay', changbayRouter)
+    // /api/ms-maybay
+    router.use('/api/ms-maybay', maybayRouter)
 
     return app.use('/', router)
 }

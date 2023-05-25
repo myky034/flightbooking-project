@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
     MayBay.init({
+        mamaybay: DataTypes.STRING,
         tenmaybay: DataTypes.STRING,
         nhasanxuat: DataTypes.STRING,
         vantoc: DataTypes.FLOAT,
