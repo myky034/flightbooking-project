@@ -13,6 +13,11 @@ import EditFlight from './components/admin/Flight/EditFlight/EditFlight';
 import ScrollToTop from './components/admin/ScrollToTop/ScrollToTop';
 import SanBay from "./components/admin/Flight/SanBay/SanBay";
 import EditAirport from './components/admin/Flight/SanBay/NewAirport/EditAirport';
+import AirLine from './components/admin/Flight/AirLine/AirLine';
+import Plane from './components/admin/Flight/Plane/Plane';
+import EditPlane from './components/admin/Flight/Plane/EditPlane';
+import ViewPlane from './components/admin/Flight/Plane/ViewPlane';
+import BookingUser from './components/users/Home/BookingUser';
 
 function App() {
   return (
@@ -20,7 +25,8 @@ function App() {
       <ScrollToTop />
       <div className="App">
         <Routes>
-          <Route path="/" element={<LoginAdmin />} />
+          <Route path="/" element={<BookingUser/>} />
+          <Route path="/loginadmin" element={<LoginAdmin />} />
           <Route path="/loginuser" element={<LoginUser />} />
           <Route path="/dashboard" element={<DashBoard />} />
           <Route path="/staff" element={<Staffs />} />
@@ -31,6 +37,10 @@ function App() {
           <Route path="/ticketclass" element={<TicketClass />} />
           <Route path="/airport" element={<SanBay />} />
           <Route path="/editairport/:id" element={<EditAirport />} />
+          <Route path="/airline" element={<AirLine />} />
+          <Route path="/plane" element={<Plane />} />
+          <Route path="/editplane/:id" element={<EditPlane />} />
+          <Route path="/viewplane/:id" element={<ViewPlane />} />
         </Routes>
       </div>
     </Router>

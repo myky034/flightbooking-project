@@ -30,6 +30,7 @@ const NewAirport = () => {
   };
 
   const [airport, setAirport] = useState(initialValues);
+  const [ischecked, setIsChecked] = useState();
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -48,7 +49,7 @@ const NewAirport = () => {
       soduongbang: airport.soduongbang,
       loaiduongbang: airport.loaiduongbang,
       chieudaidb: airport.chieudaidb,
-      baydem: airport.baydem,
+      baydem: ischecked,
       bayquocte: airport.bayquocte,
     };
 
@@ -144,8 +145,10 @@ const NewAirport = () => {
             <Input
               label="Bay đêm"
               name="baydem"
-              value={airport.baydem}
-              onChange={handleInputChange}
+              value={ischecked}
+              onChange={(checked) => setIsChecked(checked)}
+              type="checkbox"
+              checked={ischecked}
             />
             <Input
               label="Bay quốc tế"

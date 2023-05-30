@@ -20,23 +20,29 @@ import {
 } from "@material-tailwind/react";
 import { Spinner } from "@material-tailwind/react";
 import axios from "axios";
-import Pagination from "../../../Pagination/Pagination";
+import Pagination from "../../Pagination/Pagination";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import UploadFile from "../../../UploadFile/UploadFile";
 
-const TABLE_HEAD = ["Mã sân bay", "Tên sân bay", "Tỉnh", "Ngày tạo", ""];
+const TABLE_HEAD = [
+  "Mã máy bay",
+  "Tên máy bay",
+  "Nhà sản xuất",
+  "Hãng máy bay",
+  "Ngày tạo",
+  "",
+];
 let PageSize = 5;
 
-const ListAirport = () => {
+const ListPlane = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [airport, setAirport] = useState([]);
+  const [plane, setPlane] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
   const currentTableTicketClass = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
-    return airport.slice(firstPageIndex, lastPageIndex);
+    return plane.slice(firstPageIndex, lastPageIndex);
   });
 
   useMemo(() => {
@@ -45,15 +51,15 @@ const ListAirport = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    getAirport();
+    getPlane();
   }, []);
 
   //get method
-  const getAirport = async () => {
+  const getPlane = async () => {
     await axios
-      .get("http://localhost:8080/api/ms-sanbay/danhsach-sanbay?id=ALL")
+      .get("http://localhost:8080/api/ms-maybay/danhsach-maybay?id=ALL")
       .then(function (res) {
-        setAirport(res.data.data);
+        setPlane(res.data.data);
         setIsLoading(false);
         console.log(res.data);
       })
@@ -65,9 +71,9 @@ const ListAirport = () => {
   //delete method
   const handleDelete = async (id) => {
     await axios
-      .delete(`http://localhost:8080/api/ms-sanbay/xoa-sanbay?id=${id}`)
+      .delete(`http://localhost:8080/api/ms-maybay/xoa-maybay?id=${id}`)
       .then(function (res) {
-        setAirport(res.data.data);
+        setPlane(res.data.data);
         console.log(res.data);
         window.location.reload();
       })
@@ -75,7 +81,6 @@ const ListAirport = () => {
         console.log(e);
       });
   };
-
   return (
     <>
       <Card className="w-full" style={{ margin: "1rem 0 0 0" }}>
@@ -99,14 +104,6 @@ const ListAirport = () => {
                 <ArrowDownTrayIcon strokeWidth={2} className="h-4 w-4" />{" "}
                 Download
               </Button>
-              {/* <Button
-                variant="gradient"
-                className="flex items-center gap-3"
-              >
-                <CloudArrowUpIcon strokeWidth={2} className="h-5 w-5" /> Upload
-                Files
-              </Button> */}
-              <UploadFile/>
             </div>
           </div>
         </CardHeader>
@@ -134,7 +131,7 @@ const ListAirport = () => {
             <tbody>
               {currentTableTicketClass &&
                 currentTableTicketClass.map((item, index) => {
-                  const isLast = index === airport.length - 1;
+                  const isLast = index === plane.length - 1;
                   const classes = isLast
                     ? "p-2"
                     : "p-2 border-b border-blue-gray-50";
@@ -148,7 +145,7 @@ const ListAirport = () => {
                           className="font-bold"
                           style={{ marginBottom: "0" }}
                         >
-                          {item.maICAO_IATA}
+                          {item.mamaybay}
                         </Typography>
                       </td>
                       <td className={classes}>
@@ -158,7 +155,7 @@ const ListAirport = () => {
                           className="font-normal"
                           style={{ marginBottom: "0" }}
                         >
-                          {item.tensanbay}
+                          {item.tenmaybay}
                         </Typography>
                       </td>
                       <td className={classes}>
@@ -168,7 +165,17 @@ const ListAirport = () => {
                           className="font-normal"
                           style={{ marginBottom: "0" }}
                         >
-                          {item.tinh}
+                          {item.nhasanxuat}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                          style={{ marginBottom: "0" }}
+                        >
+                          {item.tongsoghe}
                         </Typography>
                       </td>
                       <td className={classes}>
@@ -184,13 +191,18 @@ const ListAirport = () => {
                       <td className={classes}>
                         <Tooltip content="View">
                           <IconButton variant="text" color="blue-gray">
-                            <EyeIcon className="h-4 w-4" />
+                            <Link
+                              to={`/viewplane/${item.id}`}
+                              className="block antialiased font-sans text-base leading-relaxed text-blue-gray-900 font-normal hover:text-blue-gray-900 focus:text-blue-gray-900 active:text-blue-gray-900"
+                            >
+                              <EyeIcon className="h-4 w-4" />
+                            </Link>
                           </IconButton>
                         </Tooltip>
                         <Tooltip content="Edit User">
                           <IconButton variant="text" color="blue-gray">
                             <Link
-                              to={`/editairport/${item.id}`}
+                              to={`/editplane/${item.id}`}
                               className="block antialiased font-sans text-base leading-relaxed text-blue-gray-900 font-normal hover:text-blue-gray-900 focus:text-blue-gray-900 active:text-blue-gray-900"
                             >
                               <PencilIcon className="h-4 w-4" />
@@ -217,7 +229,7 @@ const ListAirport = () => {
           <Pagination
             className="pagination-bar"
             currentPage={currentPage}
-            totalCount={airport.length}
+            totalCount={plane.length}
             pageSize={PageSize}
             onPageChange={(page) => setCurrentPage(page)}
           />
@@ -227,4 +239,4 @@ const ListAirport = () => {
   );
 }
 
-export default ListAirport
+export default ListPlane
